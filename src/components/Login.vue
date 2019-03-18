@@ -26,6 +26,8 @@
   import { required } from 'vuelidate/lib/validators'
   import axios from 'axios'
   import { setTimeout } from 'timers';
+  import router from '../router'
+  import store from '../store'
   const $ = require('jquery')
   window.$ = $
 
@@ -69,10 +71,11 @@
             }
           })
             .then(function (response) {
-              console.log(response.request.response);
-            })
+              store.commit('setUsuario', response.data[0]);
+              router.push('/eventos');
+             })
             .catch(function (response) {
-              $('#formularioLogin').after("<div class='error'>" + response.request.response + "</div>");
+              $('#formularioLogin').after("<div class='error'>" + response.data + "</div>");
               setTimeout(function(){
                 $(".error").remove();
               },6000);
@@ -87,7 +90,7 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
   .error{
     background-color: red;
     color: white;

@@ -40,7 +40,7 @@
     <v-text-field
       v-model="name"
       :error-messages="nameErrors"
-      label="Name"
+      label="Nombre"
       required
       @input="$v.name.$touch()"
       @blur="$v.name.$touch()"
@@ -60,7 +60,9 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, maxLength, email } from 'vuelidate/lib/validators'
-
+  import axios from 'axios'
+  const $ = require('jquery')
+  window.$ = $
   export default {
     mixins: [validationMixin],
 
@@ -130,9 +132,30 @@
 
     methods: {
       submit () {
-        this.$v.$touch() 
+        this.$v.$touch()
         if (!this.$v.$invalid) {
-          console.log(" no error")
+          axios.get('http://localhost:3002/registro', {
+            params: {
+              usuario: this.usuario,
+              password: this.password1,
+              email: this.email,
+              nombre: this.name,
+              apellidos: this.apellidos
+           }
+          })
+            .then(function (response) {
+              store.commit('setUsuario', response.data[0].usuario)
+              router.push('/eventos');
+            })
+            .catch(function (response) {
+              $('#formularioLogin').after("<div class='error'>" + response.request.response + "</div>");
+              setTimeout(function(){
+                $(".error").remove();
+              },6000);
+            })
+            .then(function () {
+              // always executed
+            });  
         }
       },
       

@@ -4,7 +4,9 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import Index from './views/Index.vue';
+import Index from '@/views/Index.vue';
+import Principal from '@/views/Principal.vue';
+
 
 
 export default new Router({
@@ -15,6 +17,11 @@ export default new Router({
       path: '/',
       name: 'Index',
       component: Index
+    },
+    {
+      path: '/eventos',
+      name: 'Principal',
+      component: Principal
     },
     {
       path: '/about',

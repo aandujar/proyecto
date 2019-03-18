@@ -31,8 +31,8 @@
 
 
 <script>
-import Registro from "../components/Registro.vue";
-import Login from "../components/Login.vue";
+import Registro from "@/components/Registro.vue";
+import Login from "@/components/Login.vue";
 
 export default {
   data() {
@@ -57,11 +57,8 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
-html,body{
-  height: 100%;
-}
 .index {
   padding: 30px;
   height: 100%;
