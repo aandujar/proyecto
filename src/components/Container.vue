@@ -1,18 +1,16 @@
 <template>
 <div class="container">
     <div class="container__buttons">
-        <v-btn class="container__buttons__button-success" v-on:click:"mostrarCrear">Crear Evento</v-btn>
-        <v-btn class="container__buttons__button-info" v-on:click:"mostrarCrear">Ver Eventos</v-btn>
+        <v-btn class="container__buttons__button-success" v-on:click="mostrarCrear">Crear Evento</v-btn>
+        <v-btn class="container__buttons__button-info" v-on:click="mostrarVer">Ver Eventos</v-btn>
     </div>
-    <div>
+    <div v-if="crear">
         <CrearEvento></CrearEvento>
     </div>
-    <div>
+    <div v-if="ver">
         <VerEventos></VerEventos>
     </div>
 </div>
-
-
 </template>
 
 <script>
@@ -21,6 +19,12 @@ import VerEventos from '@/components/VerEventos.vue'
 
 
 export default {
+    data () {
+      return {
+        crear:false,
+        ver:true
+      }
+    },
     components: {
         CrearEvento,
         VerEventos
@@ -28,10 +32,12 @@ export default {
 
     methods:{
         mostrarCrear: function(){
-            
+            this.crear = true;
+            this.ver = false;
         },
-        mostrarEditar: function(){
-
+        mostrarVer: function(){
+            this.crear = false;
+            this.ver = true;
         }
     }
     

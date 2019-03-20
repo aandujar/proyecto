@@ -1,4 +1,8 @@
-<template></template>
+<template>
+<div>componente ver</div>
+
+</template>
+
 
 <script>
 import EventBus from "../event-bus.js";
@@ -6,14 +10,14 @@ import EventBus from "../event-bus.js";
 export default {
   data() {
     return {
-      comunidad: "",
+      provincia: "",
       deporte: ""
     };
   },
 
   mounted() {
-    EventBus.$on("comunidades", categoriaSeleccionada => {
-      this.comunidad = categoriaSeleccionada;
+    EventBus.$on("provincias", categoriaSeleccionada => {
+      this.provincia = categoriaSeleccionada;
     });
     EventBus.$on("deportes", categoriaSeleccionada => {
       this.deporte = categoriaSeleccionada;
@@ -21,10 +25,10 @@ export default {
   },
   watch: {
     comunidad: function() {
-      console.log(this.comunidad + " " + this.deporte);
+      
     },
     deporte: function() {
-      console.log(this.comunidad + " " + this.deporte);
+      
     }
   }
 };

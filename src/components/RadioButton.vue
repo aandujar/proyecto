@@ -3,7 +3,6 @@
   <v-radio-group v-model="categoriaSeleccionada">
     <v-radio v-for="categoria in categorias" :key="categoria" :label="`${categoria}`" :value="categoria"></v-radio>
   </v-radio-group>
-  {{categoriaSeleccionada}}
 </div>
 </template>
 

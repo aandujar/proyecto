@@ -25,13 +25,13 @@
         <v-list-group no-action sub-group value="true">
           <template v-slot:activator>
             <v-list-tile>
-              <v-list-tile-title>Comunidades</v-list-tile-title>
+              <v-list-tile-title>Provincias</v-list-tile-title>
             </v-list-tile>
           </template>
           <div class="categorias">
             <RadioButton
-              :categorias="comunidades"
-              nombre="comunidades"
+              :categorias="provincias"
+              nombre="Provincias"
             ></RadioButton>
           </div>
 
@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       nombreUsuario: "",
-      comunidades: [],
+      provincias: [],
       deportes: []
     };
   },
@@ -73,9 +73,9 @@ export default {
   },
 
   methods: {
-    cargarComunidades(json) {
+    cargarProvincias(json) {
       var self = this;
-      json.map(comunidad => self.comunidades.push(comunidad.nombre));
+      json.map(provincia => self.provincias.push(provincia.nombre));
     },
 
     cargarDeportes(json) {
@@ -87,9 +87,9 @@ export default {
   created() {
     var self = this;
     axios
-      .get("http://localhost:3002/comunidades", {})
+      .get("http://localhost:3002/provincias", {})
       .then(function(response) {
-        self.cargarComunidades(response.data);
+        self.cargarProvincias(response.data);
       })
       .catch(function() {})
       .then(function() {
@@ -106,7 +106,7 @@ export default {
         // always executed
       });
     this.nombreUsuario =
-      "Bienvenido, " + store.getters.getNombreUsuario + store.getters.getAvatar;
+      "Bienvenido, " + store.getters.getNombreUsuario;
   },
 
   mounted() {}
