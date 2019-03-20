@@ -1,30 +1,22 @@
 <template>
   <div class="index">
+    <div class="index__buttons">
+        <v-btn class="index__buttons__button-success" v-on:click="verLogin">Login</v-btn>
+        <v-btn class="index__buttons__button-info" v-on:click="verRegistro">Registro</v-btn>
+    </div>
     <p class="index__title">
       {{ titulo1 }}
-    </p> 
+    </p>
     <p class="index__title">
       {{ titulo2 }}
-    </p> 
+    </p>
     <div class="index__pane">
-    <v-tabs v-model="active" slider-color="yellow">
-      <v-tab ripple>
-        {{ item1 }}
-      </v-tab>
-      <v-tab ripple>
-        {{ item2 }}
-      </v-tab>
-      <v-tab-item>
-        <v-card flat>
-          <Login></Login>
-        </v-card>
-      </v-tab-item>
-      <v-tab-item>
-        <v-card flat>
-          <Registro></Registro>
-        </v-card>
-      </v-tab-item>
-    </v-tabs>
+    <div v-if="condicionLogin">
+    <Login></Login>
+    </div> 
+    <div v-if="condicionRegistro">
+    <Registro></Registro>
+    </div>
     </div>
   </div>
 </template>
@@ -37,22 +29,30 @@ import Login from "@/components/Login.vue";
 export default {
   data() {
     return {
+      condicionLogin: true,
+      condicionRegistro: false,
       active: null,
       item1: "Login",
       item2: "Registro",
-      titulo1: "Nombre del proyecto es la mejor forma de buscar gente como tú para practicar tus deportes favoritos.",
+      titulo1: "SportMates es la mejor forma de buscar gente como tú para practicar tus deportes favoritos.",
       titulo2: "Simplemente regístrate o inicia sesión y podrás empezar."
     };
   },
+
   components: {
     Registro,
     Login
   },
-  methods: {
-    next() {
-      const active = parseInt(this.active);
-      this.active = active < 2 ? active + 1 : 0;
-    }
+
+  methods:{
+        verLogin: function(){
+            this.condicionLogin = true;
+            this.condicionRegistro = false;
+        },
+        verRegistro: function(){
+            this.condicionLogin = false;
+            this.condicionRegistro = true;
+        }
   }
 };
 </script>
@@ -66,13 +66,31 @@ export default {
   background-color: #388e3c !important;
 }
 
+.index__buttons{
+  display: flex;
+  flex-direction: row;
+  margin-left: 80%;
+}
+
+.index__buttons__button-success{
+  background-color: #42A5F5 !important;
+}
+
+.index__buttons__button-info{
+    background-color: #E53935 !important;
+}
+
 .index__title{
   font-size: 20px;
   text-align: center;
 }
 
 .index__pane {
+  margin-top: 50px;
   margin-left: 30%;
   width: 40%;
+  background-color: white;
+  border: 1px solid black;
+  padding: 10px;
 }
 </style>

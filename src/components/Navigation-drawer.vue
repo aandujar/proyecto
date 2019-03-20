@@ -30,8 +30,32 @@
           </template>
           <div class="categorias">
             <RadioButton
+              @clicked="cambiarLocalidades"
               :categorias="provincias"
-              nombre="Provincias"
+              nombre="provincias"
+            ></RadioButton>
+          </div>
+
+        </v-list-group>
+
+        <v-list-group no-action sub-group value="true">
+          <template v-slot:activator>
+            <v-list-tile>
+              <v-list-tile-title>Localidades</v-list-tile-title>
+            </v-list-tile>
+          </template>
+          <div class="categorias">
+            <RadioButton v-if="verAlicante"
+              :categorias="localidadesAlicante"
+              nombre="localidadesAlicante"
+            ></RadioButton>
+            <RadioButton v-if="verCastellon"
+              :categorias="localidadesCastellon"
+              nombre="localidadesCastellon"
+            ></RadioButton>
+            <RadioButton v-if="verValencia"
+              :categorias="localidadesValencia"
+              nombre="localidadesValencia"
             ></RadioButton>
           </div>
 
@@ -64,7 +88,13 @@ export default {
     return {
       nombreUsuario: "",
       provincias: [],
-      deportes: []
+      localidadesAlicante: [],
+      localidadesCastellon: [],
+      localidadesValencia: [],
+      deportes: [],
+      verAlicante: false,
+      verCastellon: false,
+      verValencia: false,
     };
   },
 
@@ -78,9 +108,38 @@ export default {
       json.map(provincia => self.provincias.push(provincia.nombre));
     },
 
+    cargarLocalidades(json) {
+      var self = this;
+      json.map(function(localidad){
+        if(localidad.provincia=="Alicante"){
+          self.localidadesAlicante.push(localidad.nombre);
+        }else if(localidad.provincia=="Castellón"){
+          self.localidadesCastellon.push(localidad.nombre);
+        }else if(localidad.provincia=="Valencia"){
+          self.localidadesValencia.push(localidad.nombre);
+        }
+      });
+    },
+
     cargarDeportes(json) {
       var self = this;
       json.map(deporte => self.deportes.push(deporte.nombre));
+    },
+
+    cambiarLocalidades(provincia){
+      if(provincia=="Alicante"){
+        this.verAlicante = true;
+        this.verCastellon = false;
+        this.verValencia = false;
+      }else if(provincia=="Castellón"){
+        this.verAlicante = false;
+        this.verCastellon = true;
+        this.verValencia = false;
+      }else if(provincia=="Valencia"){
+        this.verAlicante = false;
+        this.verCastellon = false;
+        this.verValencia = true;
+      }
     }
   },
 
@@ -96,6 +155,16 @@ export default {
         // always executed
       });
 
+      axios
+      .get("http://localhost:3002/localidades", {})
+      .then(function(response) {
+        self.cargarLocalidades(response.data);
+      })
+      .catch(function() {})
+      .then(function() {
+        // always executed
+      });
+
     axios
       .get("http://localhost:3002/deportes", {})
       .then(function(response) {
@@ -105,11 +174,11 @@ export default {
       .then(function() {
         // always executed
       });
+
     this.nombreUsuario =
       "Bienvenido, " + store.getters.getNombreUsuario;
   },
 
-  mounted() {}
 };
 </script>
 

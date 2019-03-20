@@ -3,6 +3,7 @@
   <v-radio-group v-model="categoriaSeleccionada">
     <v-radio v-for="categoria in categorias" :key="categoria" :label="`${categoria}`" :value="categoria"></v-radio>
   </v-radio-group>
+  <p>{{categoriaSeleccionada}}</p>
 </div>
 </template>
 
@@ -20,10 +21,13 @@ import EventBus from '../event-bus.js'
         switch1: true
       }
     },
-    
-     watch: {
+
+   watch: {
       categoriaSeleccionada: function(){
           EventBus.$emit(this.nombre, this.categoriaSeleccionada);  
+          if(((this.categoriaSeleccionada=="Alicante") && (this.nombre=="provincias"))  || ((this.categoriaSeleccionada=="Castellón") && (this.nombre=="provincias")) || ((this.categoriaSeleccionada=="Valencia") && (this.nombre=="provincias"))){
+            this.$emit('clicked', this.categoriaSeleccionada);
+          }
       }
     },
   }
