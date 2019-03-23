@@ -1,21 +1,22 @@
 <template>
 <div class="page">
+
 <div class="page__header">
     <Header></Header>
 </div>
+
 <div class="page__container">
-    <router-link to="/eventos">
-    
-        <v-btn class="container__buttons__button-success">Ver Eventos</v-btn>
-        </router-link>
-    
-    <div class="pane">
-    <CrearEvento></CrearEvento>
-    </div>
+   <CrearEvento></CrearEvento>
 </div>
-<div class="page__footer"></div>
-</div>
+
+<div class="page__footer">
+
     
+</div>
+
+
+
+</div>
 </template>
 
 
@@ -26,7 +27,6 @@ import CrearEvento from "@/components/CrearEvento.vue"
 export default {
   components: {
     Header,
-
     CrearEvento
   }
 };
@@ -46,21 +46,12 @@ export default {
     grid-area: header; 
 }
 
-.page-container{
+.page__container{
     grid-area: container;
 }
 
 .page__footer{
     grid-area: footer;
-}
-
-.pane {
-  margin-top: 50px;
-  margin-left: 40%;
-  width: 60%;
-  background-color: white;
-  border: 1px solid black;
-  padding: 10px;
 }
 
 </style>

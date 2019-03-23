@@ -7,7 +7,7 @@
         src="http://localhost:3002/imagenes/logo.png" 
         class="header__items__item__imagen"
     ></v-img>
-    </router-link>>
+    </router-link>
     </li>
 <li class="header__items__item header__items__item--derecha">
     <v-img

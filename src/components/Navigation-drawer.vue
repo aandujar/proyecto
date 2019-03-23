@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer stateless value="true">
+  <v-navigation-drawer stateless value="true" class="menu-side">
     <v-list>
       <v-list-tile>
         <v-list-tile-action>
@@ -183,6 +183,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.menu-side{
+  height: 700px;
+}
 .categorias {
   margin-left: 20%;
 }
