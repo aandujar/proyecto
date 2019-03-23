@@ -1,22 +1,31 @@
 <template>
   <div class="index">
-    <div class="index__buttons">
-        <v-btn class="index__buttons__button-success" v-on:click="verLogin">Login</v-btn>
-        <v-btn class="index__buttons__button-info" v-on:click="verRegistro">Registro</v-btn>
-    </div>
-    <p class="index__title">
-      {{ titulo1 }}
-    </p>
-    <p class="index__title">
-      {{ titulo2 }}
-    </p>
+    <ul class="index__header">
+     <li> 
+        <v-img 
+          src="http://localhost:3002/imagenes/logo.png" 
+          class="index__header__image"
+        ></v-img>
+      </li>
+      <div class="index__header__buttons">
+        <li>
+          <v-btn class="index__header__buttons__button-login" v-on:click="verLogin">Login</v-btn>
+        </li>
+        <li> 
+          <v-btn class="index__header__buttons__button-registro" v-on:click="verRegistro">Registro</v-btn>
+        </li>
+      </div>
+    </ul>
+
+    <p class="index__title">{{ titulo1 }}</p>
+    <p class="index__title">{{ titulo2 }}</p>
     <div class="index__pane">
-    <div v-if="condicionLogin">
-    <Login></Login>
-    </div> 
-    <div v-if="condicionRegistro">
-    <Registro></Registro>
-    </div>
+      <div v-if="condicionLogin">
+        <Login></Login>
+      </div>
+      <div v-if="condicionRegistro">
+        <Registro></Registro>
+      </div>
     </div>
   </div>
 </template>
@@ -34,7 +43,8 @@ export default {
       active: null,
       item1: "Login",
       item2: "Registro",
-      titulo1: "SportMates es la mejor forma de buscar gente como tú para practicar tus deportes favoritos.",
+      titulo1:
+        "SportMates es la mejor forma de buscar eventos para practicar tus deportes favoritos en la Comunidad Valenciana.",
       titulo2: "Simplemente regístrate o inicia sesión y podrás empezar."
     };
   },
@@ -44,49 +54,61 @@ export default {
     Login
   },
 
-  methods:{
-        verLogin: function(){
-            this.condicionLogin = true;
-            this.condicionRegistro = false;
-        },
-        verRegistro: function(){
-            this.condicionLogin = false;
-            this.condicionRegistro = true;
-        }
+  methods: {
+    verLogin: function() {
+      this.condicionLogin = true;
+      this.condicionRegistro = false;
+    },
+    verRegistro: function() {
+      this.condicionLogin = false;
+      this.condicionRegistro = true;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
 .index {
-  padding: 30px;
   height: 100%;
   width: 100%;
   background-color: #388e3c !important;
 }
 
-.index__buttons{
+.index__header {
   display: flex;
   flex-direction: row;
-  margin-left: 80%;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  list-style: none;
+  padding: 20px;
 }
 
-.index__buttons__button-success{
-  background-color: #42A5F5 !important;
+.index__header__buttons{
+  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.index__buttons__button-info{
-    background-color: #E53935 !important;
+.index__header__buttons__button-login {
+  background-color: #42a5f5 !important;
 }
 
-.index__title{
+.index__header__buttons__button-registro {
+  background-color: #e53935 !important;
+}
+
+.index__header__image {
+  height: 140px;
+  width: 250px;
+}
+
+.index__title {
   font-size: 20px;
   text-align: center;
 }
 
 .index__pane {
-  margin-top: 50px;
   margin-left: 30%;
   width: 40%;
   background-color: white;

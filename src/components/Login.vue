@@ -28,8 +28,7 @@
   import { setTimeout } from 'timers';
   import router from '../router'
   import store from '../store'
-  const $ = require('jquery')
-  window.$ = $
+  
 
   export default {
     mixins: [validationMixin],

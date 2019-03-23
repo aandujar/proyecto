@@ -6,6 +6,7 @@ Vue.use(Router)
 
 import Index from '@/views/Index.vue';
 import Principal from '@/views/Principal.vue';
+import CrearEvento from '@/views/Create.vue';
 
 
 
@@ -23,6 +24,12 @@ export default new Router({
       name: 'Principal',
       component: Principal
     },
+    {
+      path: '/crearEvento',
+      name: 'CrearEvento',
+      component: CrearEvento
+    },
+    
     {
       path: '/about',
       name: 'about',

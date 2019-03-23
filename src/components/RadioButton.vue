@@ -3,12 +3,10 @@
   <v-radio-group v-model="categoriaSeleccionada">
     <v-radio v-for="categoria in categorias" :key="categoria" :label="`${categoria}`" :value="categoria"></v-radio>
   </v-radio-group>
-  <p>{{categoriaSeleccionada}}</p>
 </div>
 </template>
 
 <script>
-import store from '../store'
 import EventBus from '../event-bus.js'
 
   export default {

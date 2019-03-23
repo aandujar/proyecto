@@ -1,11 +1,13 @@
 <template>
-<div>componente ver</div>
-
+<div>
+<Card></Card>
+  </div>
 </template>
 
 
 <script>
 import EventBus from "../event-bus.js";
+import Card from '@/components/Card.vue'
 
 export default {
   data() {
@@ -13,6 +15,10 @@ export default {
       provincia: "",
       deporte: ""
     };
+  },
+
+  components: {
+    Card
   },
 
   mounted() {
