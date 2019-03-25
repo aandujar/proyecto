@@ -17,7 +17,11 @@
         @input="$v.password.$touch()"
         @blur="$v.password.$touch()"
     ></v-text-field>
-     <v-btn id="boton" @click="submit">Login</v-btn>
+     <v-btn @click="submit">Login</v-btn>
+      <div
+      v-if="error"
+      class="error"
+    >{{mensajeError}}</div>
   </form>
 </template>
 
@@ -42,6 +46,7 @@
       usuario: '',
       password: '',
       error: false,
+      mensajeError: ''
     }),
 
     computed: {
@@ -60,7 +65,9 @@
     },
 
     methods: {
+      
       submit () {
+        this.error = false;
         this.$v.$touch()
         if (!this.$v.$invalid) {
           axios.get('http://localhost:3002/login', {
@@ -70,14 +77,14 @@
             }
           })
             .then(function (response) {
+              console.log(response.data);
               store.commit('setUsuario', response.data[0]);
               router.push('/eventos');
              })
             .catch(function (response) {
-              $('#formularioLogin').after("<div class='error'>" + response.data + "</div>");
-              setTimeout(function(){
-                $(".error").remove();
-              },6000);
+              console.log(response);
+             self.error = true;
+             self.mensajeError = response.data.error;
             })
             .then(function () {
               // always executed

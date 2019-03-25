@@ -91,11 +91,11 @@ export default {
 }
 
 .index__header__buttons__button-login {
-  background-color: #42a5f5 !important;
+  background-color: #00BCD4  !important;
 }
 
 .index__header__buttons__button-registro {
-  background-color: #e53935 !important;
+  background-color: #607D8B !important;
 }
 
 .index__header__image {

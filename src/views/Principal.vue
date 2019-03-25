@@ -35,10 +35,11 @@ export default {
 
 .page{
     display: grid;
-    grid-template-areas:  'header header header'
-                          'menu-side container container'
-                          'menu-side container container'
-                          'footer footer footer';
+    grid-template-areas:  'header header header header header'
+                          'menu-side container container container container'
+                          'menu-side container container container container'
+                          'footer footer footer footer footer';
+    grid-template-columns: 20% 20% 20% 20% 20%;
 }
 
 .page__header { 
@@ -47,10 +48,12 @@ export default {
 
 .page__menu-side{
     grid-area: menu-side;
+    
 }
 
-.page-container{
+.page__container{
     grid-area: container;
+    background: linear-gradient(60deg,#F5F5F5,#616161)!important;
 }
 
 .page__footer{

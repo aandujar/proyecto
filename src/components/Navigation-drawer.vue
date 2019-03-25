@@ -186,8 +186,9 @@ export default {
 
 .menu-side{
   height: 700px;
+  width: 30%;
 }
 .categorias {
-  margin-left: 20%;
+  padding-left: 20%;
 }
 </style>

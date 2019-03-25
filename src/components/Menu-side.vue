@@ -20,7 +20,7 @@ export default {
 
 <style>
 .menu-side{
-  height: 700px;
+ 
 }
 
 

@@ -86,7 +86,7 @@
 
       <v-btn @click="submit" color="#00897B">Crear Evento</v-btn>
       <router-link to="/eventos">
-        <v-btn @click="submit" color="#B71C1C">Cancelar</v-btn>
+        <v-btn color="#B71C1C">Cancelar</v-btn>
       </router-link>
     </form>
   </div>
@@ -98,6 +98,7 @@ import { required, maxLength, between } from "vuelidate/lib/validators";
 import DatePicker from "@/components/DatePicker.vue";
 import axios from "axios";
 import store from "../store";
+import router from '../router'
 
 export default {
   mixins: [validationMixin],
@@ -111,7 +112,6 @@ export default {
     fechaSeleccionada: "",
     hora: "",
     errorHora: false,
-    fecha: "",
     errorFecha: false,
     errorProvincia: false,
     errorLocalidad: false,
@@ -143,19 +143,32 @@ export default {
         this.mostrarAlicante = true;
         this.mostrarCastellon = false;
         this.mostrarValencia = false;
+        this.localidadAlicante='';
+        this.localidadCastellon='';
+        this.localidadValencia='';
       } else if (this.provincia == "Castellón") {
         this.mostrarAlicante = false;
         this.mostrarCastellon = true;
         this.mostrarValencia = false;
+        this.localidadAlicante='';
+        this.localidadCastellon='';
+        this.localidadValencia='';
       } else if (this.provincia == "Valencia") {
         this.mostrarAlicante = false;
         this.mostrarCastellon = false;
         this.mostrarValencia = true;
+        this.localidadAlicante='';
+        this.localidadCastellon='';
+        this.localidadValencia='';
       } else {
         this.mostrarAlicante = false;
         this.mostrarCastellon = false;
         this.mostrarValencia = false;
+        this.localidadAlicante='';
+        this.localidadCastellon='';
+        this.localidadValencia='';
       }
+      console.log(this.provincia);
     },
 
     hora: function() {
@@ -200,10 +213,7 @@ export default {
   },
 
   created() {
-    var hoy = new Date();
-    this.fecha = hoy.getDate() + "-" + hoy.getMonth() + "-" + hoy.getFullYear();
     var self = this;
-
     axios
       .get("http://localhost:3002/provincias", {})
       .then(function(response) {
@@ -254,14 +264,14 @@ export default {
           } else {
             this.errorLocalidad = true;
           }
-        } else if ((this.provincia = "Castellón")) {
+        } else if ((this.provincia == "Castellón")) {
           if (this.localidadCastellon != "") {
             localidadSeleccionada = this.localidadCastellon;
             this.errorLocalidad = false;
           } else {
             this.errorLocalidad = true;
           }
-        } else if ((this.provincia = "Valencia")) {
+        } else if ((this.provincia == "Valencia")) {
           if (this.localidadValencia != "") {
             localidadSeleccionada = this.localidadValencia;
             this.errorLocalidad = false;
@@ -297,13 +307,16 @@ export default {
       if (this.descripcion == "") {
         errorAjax = true;
       }
-
+     
       if (errorAjax == false) {
         var id = store.getters.getIdUsuario;
+        var email = store.getters.getEmailUsuario;
+        console.log(email);
         axios
           .post("http://localhost:3002/crearEvento", {
             data: {
               id: id,
+              email: email,
               provincia: this.provincia,
               localidad: localidadSeleccionada,
               deporte: this.deporte,
@@ -317,7 +330,7 @@ export default {
             }
           })
           .then(function(response) {
-            console.log(response);
+            router.push('/confirmacionEvento');
           })
           .catch(function(response) {
             console.log(response);
@@ -329,13 +342,24 @@ export default {
     },
 
     cambiarFecha: function(date) {
-      if (date <= this.fecha) {
+      var trocearFechaElegida = date.split("-");
+      var crearFecha = new Date(trocearFechaElegida[2],trocearFechaElegida[1],trocearFechaElegida[0]);
+      var ahora = new Date();
+      var mes = parseInt(trocearFechaElegida[1]);
+      mes--;
+     
+     if((crearFecha.getFullYear()>=ahora.getFullYear()) && (mes>=ahora.getMonth()) && (crearFecha.getDate()>ahora.getDate())){
+        this.errorFecha = false;
+        this.fechaSeleccionada = date;
+      }else if((crearFecha.getFullYear()>=ahora.getFullYear()) && (mes>ahora.getMonth())){
+        this.errorFecha = false;
+        this.fechaSeleccionada = date;
+      }else if(crearFecha.getFullYear()>ahora.getFullYear()){
+        this.errorFecha = false;
+        this.fechaSeleccionada = date;
+      }else{
         this.errorFecha = true;
-      } else {
-        if (this.errorFecha == true) {
-          this.errorFecha = false;
-          this.fechaSeleccionada = date;
-        }
+        this.fechaSeleccionada='';
       }
     },
 
@@ -371,7 +395,7 @@ export default {
   height: 700px;
   width: 100%;
   padding-top: 30px;
-  background-color: #455a64;
+  background: linear-gradient(60deg,#F5F5F5,#616161)!important;
 }
 
 .contenedor__form {

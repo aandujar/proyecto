@@ -8,14 +8,17 @@ export default new Vuex.Store({
      usuario: [
         {id:''},
         {nombre:""},
-        {avatar:""}
+        {avatar:""},
+        {email:""}
       ]
   },
   mutations: {
-    setUsuario(state,usuario){
-      state.usuario.id = usuario.id;
-      state.usuario.nombre = usuario.nombre;
-      state.usuario.avatar = usuario.avatar;
+    setUsuario(state,json){
+      console.log(json);
+      state.usuario.id = json.id;
+      state.usuario.nombre = json.nombre;
+      state.usuario.avatar = json.avatar;
+      state.usuario.email = json.correo;
     }
 
   },
@@ -32,6 +35,9 @@ export default new Vuex.Store({
     },
     getAvatarUsuario: state => {
       return state.usuario.avatar;
+    },
+    getEmailUsuario: state => {
+      return state.usuario.email;
     }
   },
 })

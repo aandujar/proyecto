@@ -54,6 +54,10 @@
       @blur="$v.apellidos.$touch()"
     ></v-text-field>
      <v-btn id="botonSubmit" @click="submit">Registrarme</v-btn>
+     <div
+      v-if="error"
+      class="error"
+    >{{mensajeError}}</div>
   </form>
 </template>
 
@@ -61,8 +65,9 @@
   import { validationMixin } from 'vuelidate'
   import { required, maxLength, email } from 'vuelidate/lib/validators'
   import axios from 'axios'
-  const $ = require('jquery')
-  window.$ = $
+  import router from '../router'
+  import store from '../store'
+ 
   export default {
     mixins: [validationMixin],
 
@@ -75,6 +80,8 @@
       email: { required, email }
     },
     data: () => ({
+      error: false,
+      mensajeError: '',
       usuario: '',
       password1: '',
       password2: '',
@@ -131,27 +138,32 @@
     },
 
     methods: {
+      
       submit () {
+        var self = this;
+        this.error = false;
         this.$v.$touch()
         if (!this.$v.$invalid) {
-          axios.get('http://localhost:3002/registro', {
-            params: {
+          axios.post('http://localhost:3002/registro', {
+            data: {
               usuario: this.usuario,
               password: this.password1,
               email: this.email,
               nombre: this.name,
               apellidos: this.apellidos
-           }
+            },
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            }
           })
             .then(function (response) {
-              store.commit('setUsuario', response.data[0].usuario)
+              store.commit('setUsuario', response.data)
               router.push('/eventos');
             })
             .catch(function (response) {
-              $('#formularioLogin').after("<div class='error'>" + response.request.response + "</div>");
-              setTimeout(function(){
-                $(".error").remove();
-              },6000);
+              console.log(response);
+              self.error = true;
+              self.mensajeError = response.data.error;
             })
             .then(function () {
               // always executed
@@ -162,3 +174,13 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+
+.error{
+  background-color: white;
+  color: red;
+  font-size: 20px;
+}
+
+</style>

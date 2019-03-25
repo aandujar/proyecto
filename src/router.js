@@ -7,6 +7,7 @@ Vue.use(Router)
 import Index from '@/views/Index.vue';
 import Principal from '@/views/Principal.vue';
 import CrearEvento from '@/views/Create.vue';
+import ConfirmacionEvento from '@/views/ConfirmacionEvento.vue';
 
 
 
@@ -17,7 +18,7 @@ export default new Router({
     {
       path: '/',
       name: 'Index',
-      component: Index
+      component: () => import('@/views/Index.vue')
     },
     {
       path: '/eventos',
@@ -28,6 +29,11 @@ export default new Router({
       path: '/crearEvento',
       name: 'CrearEvento',
       component: CrearEvento
+    },
+    {
+      path: '/confirmacionEvento',
+      name: 'ConfirmacionEvento',
+      component: () => import('@/views/ConfirmacionEvento.vue')
     },
     
     {
