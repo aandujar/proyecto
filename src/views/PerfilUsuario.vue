@@ -4,7 +4,7 @@
     <Header></Header>
 </div>
 <div class="page__container">
-    <Container></Container>
+    <Perfil></Perfil>
 </div>
 </div>
 </template>
@@ -12,12 +12,12 @@
 
 <script>
 import Header from "@/components/Header.vue";
-import Container from "@/components/Container.vue";
+import Perfil from "@/components/Perfil.vue";
 
 export default {
   components: {
     Header,
-    Container
+    Perfil
   }
 };
 </script>
@@ -40,7 +40,6 @@ export default {
 
 .page__container{
     grid-area: page__container;
-    background: linear-gradient(60deg,#F5F5F5,#616161)!important;
 }
 
 

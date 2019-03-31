@@ -21,8 +21,9 @@ export default {
   },
 
   mounted(){
+      var self = this;
       setTimeout(function(){
-           router.push('/eventos');
+           self.$router.push('/eventos');
       }, 6000);
 
   }

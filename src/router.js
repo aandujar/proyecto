@@ -4,13 +4,6 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import Index from '@/views/Index.vue';
-import Principal from '@/views/Principal.vue';
-import CrearEvento from '@/views/Create.vue';
-import ConfirmacionEvento from '@/views/ConfirmacionEvento.vue';
-
-
-
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -23,17 +16,17 @@ export default new Router({
     {
       path: '/eventos',
       name: 'Principal',
-      component: Principal
+      component: () => import('@/views/Principal.vue')
     },
     {
       path: '/crearEvento',
       name: 'CrearEvento',
-      component: CrearEvento
+      component: () => import('@/views/Create.vue')
     },
     {
-      path: '/confirmacionEvento',
-      name: 'ConfirmacionEvento',
-      component: () => import('@/views/ConfirmacionEvento.vue')
+      path: '/perfil',
+      name: 'Pefril',
+      component: () => import('@/views/PerfilUsuario.vue')
     },
     
     {

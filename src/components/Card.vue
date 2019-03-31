@@ -1,8 +1,8 @@
 <template>
-  <v-card class="mt-3 mx-auto card">
+  <v-card class="mt-3 mx-auto card" elevation="12">
     <v-sheet
       class="v-sheet--offset mx-auto card__header"
-      elevation="12"
+      elevation="18"
       max-width="calc(100% - 32px)"
     >
       <v-img
@@ -15,10 +15,10 @@
 
 
     <div><v-icon>work</v-icon>{{ deporte }}</div>
-       <div><v-icon>room</v-icon>{{localidad}}</div>
-       <div><v-icon>room</v-icon>{{provincia}}</div>
-      <div><v-icon>date_range</v-icon>{{crearFecha}}</div>
-      <div><v-icon>access_time</v-icon>{{crearHora}}</div>
+    <div><v-icon>room</v-icon>{{localidad}}</div>
+    <div><v-icon>room</v-icon>{{provincia}}</div>
+    <div><v-icon>date_range</v-icon>{{crearFecha}}</div>
+    <div><v-icon>access_time</v-icon>{{crearHora}}</div>
       
       </div>
 <v-divider class="my-2"></v-divider>
@@ -29,7 +29,7 @@
       
       <div class="card__footer">
           <v-btn flat color="green" v-on:click="metodo" class="card__footer__boton">Inscribirse</v-btn>
-          <v-btn flat color="blue" class="card__footer__boton">Ver en mapa</v-btn>
+          <v-btn flat color="blue" v-on:click="enviarLocalizacion" class="card__footer__boton">Ver en mapa</v-btn>
         <div class="card__footer__inscritos">{{participantesInscritos}}/{{participantesMaximos}}</div>
       </div>
   </v-card>
@@ -51,7 +51,8 @@ export default {
     id: Number,
     latitud: Number,
     longitud: Number,
-    metodo: Function
+    metodo: Function,
+    metodo2: Function
   },
 
   computed:{
@@ -68,11 +69,14 @@ export default {
 
     rutaImagen: function(){
        return "http://localhost:3002/imagenes/" + this.deporte + ".png";
-  },
-
-  
-
   }
+  },
+  methods:{
+    enviarLocalizacion(){
+      this.$emit('mandarLocalizacion',this.latitud,this.longitud);
+    }
+  }
+  
   
 };
 </script>
@@ -91,13 +95,12 @@ export default {
   width: 90px;
   top: -15px;
   left: -90px;
-  z-index:1;
+  z-index:0;
 }
 
 .card__detalles{
   position: relative;
   padding-left: 120px;
-  z-index: 0;
   top: -70px;
   margin-bottom: -70px;
   font-size: 20px;
@@ -113,7 +116,6 @@ export default {
 }
 
 .card__footer{
-  position: relative;
   display: flex;
   flex-direction: row;
   top: -20px;

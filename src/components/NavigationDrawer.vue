@@ -1,21 +1,40 @@
 <template>
-  <v-navigation-drawer stateless value="true" class="menu-side">
-    <v-list>
+  <v-navigation-drawer class="page__menu-side" stateless value="true" mini-variant-width="80" :mini-variant="mini">
+    
+         <v-btn flat v-if="mini" @click="cambiarMenu"><v-icon>chevron_right</v-icon></v-btn>
+         <v-btn flat v-else @click="cambiarMenu"><v-icon>chevron_left</v-icon></v-btn>
+       
+      
+  <v-list>
+
+     <router-link to="/eventos">
       <v-list-tile>
         <v-list-tile-action>
           <v-icon>home</v-icon>
         </v-list-tile-action>
         <v-list-tile-title>Inicio</v-list-tile-title>
       </v-list-tile>
+     </router-link>
 
+      <router-link to="/perfil">
       <v-list-tile>
         <v-list-tile-action>
           <v-icon>account_circle</v-icon>
         </v-list-tile-action>
         <v-list-tile-title>{{nombreUsuario}}</v-list-tile-title>
       </v-list-tile>
+      </router-link>
 
-      <v-list-group prepend-icon="filter_list" value="true">
+       <router-link to="/">
+      <v-list-tile>
+        <v-list-tile-action>
+          <v-icon>power_settings_new</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-title>Logout</v-list-tile-title>
+      </v-list-tile>
+       </router-link>
+
+      <v-list-group prepend-icon="filter_list" value="true" v-if="!mini">
         <template v-slot:activator>
           <v-list-tile>
             <v-list-tile-title>Filtros</v-list-tile-title>
@@ -47,15 +66,15 @@
           <div class="categorias">
             <RadioButton v-if="verAlicante"
               :categorias="localidadesAlicante"
-              nombre="localidadesAlicante"
+              nombre="localidades"
             ></RadioButton>
             <RadioButton v-if="verCastellon"
               :categorias="localidadesCastellon"
-              nombre="localidadesCastellon"
+              nombre="localidades"
             ></RadioButton>
             <RadioButton v-if="verValencia"
               :categorias="localidadesValencia"
-              nombre="localidadesValencia"
+              nombre="localidades"
             ></RadioButton>
           </div>
 
@@ -86,6 +105,7 @@ import RadioButton from "@/components/RadioButton.vue";
 export default {
   data() {
     return {
+      mini: false,
       nombreUsuario: "",
       provincias: [],
       localidadesAlicante: [],
@@ -103,6 +123,15 @@ export default {
   },
 
   methods: {
+
+    cambiarMenu(){
+      if(this.mini==true){
+        this.mini=false;
+      }else{
+        this.mini=true;
+      }
+    },
+
     cargarProvincias(json) {
       var self = this;
       json.map(provincia => self.provincias.push(provincia.nombre));
@@ -184,9 +213,8 @@ export default {
 
 <style lang="scss" scoped>
 
-.menu-side{
-  height: 700px;
-  width: 30%;
+.page__menu-side{
+
 }
 .categorias {
   padding-left: 20%;

@@ -1,24 +1,32 @@
 <template>
   <div class="index">
     <ul class="index__header">
-     <li> 
-        <v-img 
-          src="http://localhost:3002/imagenes/logo.png" 
-          class="index__header__image"
-        ></v-img>
+      <li>
+        <v-img src="http://localhost:3002/imagenes/logo.png" class="index__header__image"></v-img>
+      </li>
+      <li class="index__progress">
+        <v-progress-circular
+          v-show="datos.logado=='cargando' || datos.registro=='cargando'"
+          :size="70"
+          :width="7"
+          color="black"
+          indeterminate
+        ></v-progress-circular>
       </li>
       <div class="index__header__buttons">
         <li>
           <v-btn class="index__header__buttons__button-login" v-on:click="verLogin">Login</v-btn>
         </li>
-        <li> 
+        <li>
           <v-btn class="index__header__buttons__button-registro" v-on:click="verRegistro">Registro</v-btn>
         </li>
       </div>
     </ul>
 
-    <p class="index__title">{{ titulo1 }}</p>
-    <p class="index__title">{{ titulo2 }}</p>
+    <p
+      class="index__title"
+    >SportMates es la mejor forma de buscar eventos para practicar tus deportes favoritos en la Comunidad Valenciana.</p>
+    <p class="index__title">Simplemente regístrate o inicia sesión y podrás empezar.</p>
     <div class="index__pane">
       <div v-if="condicionLogin">
         <Login></Login>
@@ -40,15 +48,14 @@ export default {
     return {
       condicionLogin: true,
       condicionRegistro: false,
-      active: null,
-      item1: "Login",
-      item2: "Registro",
-      titulo1:
-        "SportMates es la mejor forma de buscar eventos para practicar tus deportes favoritos en la Comunidad Valenciana.",
-      titulo2: "Simplemente regístrate o inicia sesión y podrás empezar."
+      active: null
     };
   },
-
+  computed: {
+    datos() {
+      return this.$store.state;
+    }
+  },
   components: {
     Registro,
     Login
@@ -83,19 +90,20 @@ export default {
   padding: 20px;
 }
 
-.index__header__buttons{
+.index__header__buttons {
   margin-left: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .index__header__buttons__button-login {
-  background-color: #00BCD4  !important;
+  background-color: #00bcd4 !important;
 }
 
 .index__header__buttons__button-registro {
-  background-color: #607D8B !important;
+  background-color: #607d8b !important;
 }
 
 .index__header__image {
@@ -114,5 +122,9 @@ export default {
   background-color: white;
   border: 1px solid black;
   padding: 10px;
+}
+
+.index__progress {
+  margin-left: 28%;
 }
 </style>
